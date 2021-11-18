@@ -38,8 +38,8 @@ export default function Card(props) {
           {
             card_data.tags
             ?
-            card_data.tags.map(ele=>{
-              return (<span className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{ele}</span>)
+            card_data.tags.map((ele,id)=>{
+              return (<span key={id} className="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{ele}</span>)
             })
             :
             <></> 
