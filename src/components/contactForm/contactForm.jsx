@@ -8,11 +8,19 @@ export default function ContactForm(props) {
 
     const [txtmsg,setTxtMsg]=useState('');
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register,resetField, handleSubmit, formState: { errors } } = useForm({mode: "onChange",
+    defaultValues: {
+        fullName: "",
+        mobileNumber:"",
+        email:""
+    }});
 
     const onSubmit = (data) => {
         // console.log(data);
         const msg=`Name:${(data.fullName && data.fullName!=='')?data.fullName:'N/A'}\nPhone:${(data.mobileNumber && data.mobileNumber!=='')?data.mobileNumber:'N/A'}\nEmail:${data.email?data.email:'N/A'}`;
+        resetField("fullName");
+        resetField("mobileNumber");
+        resetField("email");
 
         setTxtMsg(msg);
 
@@ -27,9 +35,9 @@ export default function ContactForm(props) {
             // console.log(url);
             const sendingMsg=Axios.post(url, {chat_id: process.env.REACT_APP_CHAT_ID,text: txtmsg})
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 if(response.data.ok===true){
-                    toast.success("Instructor will call you..👍👍",{
+                    toast.success("We will call you soon..👍👍",{
                         options:{
                             duration:8000,
                             icon:''
@@ -65,9 +73,9 @@ export default function ContactForm(props) {
     const inputStyle="mt-3 block w-full rounded-md border-green-300 shadow-sm focus:border-cyan-300 focus:ring focus:ring-cyan-200 focus:ring-opacity-50"
 
     return(
-        <div className="flex items-center justify-center justify-items-center pt-6">
-            <form className="bg-white shadow-md rounded px-8 py-2 mb-2" onSubmit={handleSubmit(onSubmit)}>
-                <h1 className="block font-bold text-green-700 text-xl text-center">👉 Get in Touch with Us 👈</h1>
+        <div className="flex items-center justify-center justify-items-center py-6 ">
+            <form className="shadow-lg rounded px-8 py-4 mb-2 bg-green-50" onSubmit={handleSubmit(onSubmit)}>
+                <h1 className="block font-bold text-xl text-center"> Get in Touch with Us </h1>
                 <br/>
                 <input type="text" className={inputStyle} placeholder="Full name" 
                 {...register("fullName", 
@@ -79,9 +87,7 @@ export default function ContactForm(props) {
                         maxLength: {
                             value:32,
                             message:"🙆 Name is above 32 characters 🙆‍♂️"
-                        }, 
-                        min: 2, 
-                        pattern: /^[A-Za-z]+$/i
+                        },
                     })
                 } />
                 {(errors.fullName && errors.fullName.type==="maxLength")?(<p className="mt-2 mb-2">{errors.fullName.message}</p>):<></>}
@@ -116,7 +122,7 @@ export default function ContactForm(props) {
                     })
                 } />
                 {(errors.email && errors.email.type==="pattern")?(<p className="mt-2 mb-2">{errors.email.message}</p>):<></>}
-                <button className="uppercase px-1 py-1 mt-4 mb-4 bg-transparent border-2 border-green-500 text-green-500 text-sm rounded-lg transition-colors duration-200 transform hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300" type='submit'>Submit</button>
+                <button className="uppercase px-1 py-1 mt-4 mb-4 bg-transparent border-2 border-green-500 text-sm rounded-lg transition-colors duration-200 transform hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300" type='submit'>Submit</button>
             </form>
             <Toaster position="top-right"/>
         </div>

@@ -4,7 +4,7 @@ import ContactForm from './components/contactForm/contactForm';
 
 function App() {
   return (
-    <div className="font-mono dark:bg-blue-50">
+    <div className="font-mono ">
       <Header/>
       <CardContainer/>
       <ContactForm/>
