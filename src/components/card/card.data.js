@@ -6,7 +6,7 @@ export const card_data=[
         "description":"Abacus course aims to develop brain by helping you improve your calculations, abilities, number sense, and mental arithmetic.",
         "tags":["Walkers","Joggers","Sprinters"]
     },
-    {
+    {        
         "title":"Rubik's Cube",
         "imageCode":2,
         "imageInvalid":"couldn't find the image",

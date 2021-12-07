@@ -1,27 +1,30 @@
-import React,{useEffect,useState} from "react"
+import React,{useEffect,useState} from "react";
 import Axios from 'axios';
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from 'react-hot-toast';
 
+let renderCount = 0;
 
 export default function ContactForm(props) {
 
-    const [txtmsg,setTxtMsg]=useState('');
+    
+
+    const [txtmsg,setTxtMsg] = useState('');
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (data) => {
-        // console.log(data);
-        const msg=`Name:${(data.fullName && data.fullName!=='')?data.fullName:'N/A'}\nPhone:${(data.mobileNumber && data.mobileNumber!=='')?data.mobileNumber:'N/A'}\nEmail:${data.email?data.email:'N/A'}`;
+        console.log(data);
+        const msg=`Name:${(data.fullName && data.fullName!=='')?data.fullName:'N/A'}\n Phone:${(data.mobileNumber && data.mobileNumber!=='')?data.mobileNumber:'N/A'}\n Email:${data.email?data.email:'N/A'}`;
 
         setTxtMsg(msg);
 
     }
 
-    // console.log(errors);
+    console.log(errors);
 
     useEffect(()=>{
-        // console.log(txtmsg);
+        console.log(txtmsg);
         if (txtmsg && txtmsg!==''){
             const url="https://api.telegram.org/bot"+process.env.REACT_APP_BOT_TOKEN+"/sendMessage";
             // console.log(url);
@@ -63,6 +66,9 @@ export default function ContactForm(props) {
     },[txtmsg]);
 
     const inputStyle="mt-3 block w-full rounded-md border-green-300 shadow-sm focus:border-cyan-300 focus:ring focus:ring-cyan-200 focus:ring-opacity-50"
+    
+    renderCount++;
+    console.log(renderCount);
 
     return(
         <div className="flex items-center justify-center justify-items-center pt-6">
@@ -116,7 +122,8 @@ export default function ContactForm(props) {
                     })
                 } />
                 {(errors.email && errors.email.type==="pattern")?(<p className="mt-2 mb-2">{errors.email.message}</p>):<></>}
-                <button className="uppercase px-1 py-1 mt-4 mb-4 bg-transparent border-2 border-green-500 text-green-500 text-sm rounded-lg transition-colors duration-200 transform hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300" type='submit'>Submit</button>
+                <button className="uppercase px-1 py-1 mt-4 mb-4 bg-transparent border-2 border-green-500 text-green-500 text-sm rounded-lg transition-colors duration-200 transform hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300" 
+                type='submit'>Submit</button>
             </form>
             <Toaster position="top-right"/>
         </div>
